@@ -11,7 +11,10 @@ interface Config {
 	CLIENT_ID: string;
 	LOG_CHANNEL_ID: string;
 	APPROVAL_CHANNEL_ID: string;
-	SCANNING_CHANNELS: string[];
+	SCANNING_CHANNELS: {
+		submission_channel_id: string;
+		approved_images_channel_id:string
+	}[];
 }
 
 const getConfig = (): ENV => {
@@ -31,7 +34,10 @@ const getSanitizedConfig = (config: ENV): Config => {
 		}
 	}
 	let parsedConfig = JSON.parse(JSON.stringify(config));
-	parsedConfig.CATEGORY_IDS = JSON.parse(config.SCANNING_CHANNELS);
+	let parsedChannelConfig = JSON.parse(config.SCANNING_CHANNELS);
+	parsedConfig.SCANNING_CHANNELS = parsedChannelConfig;
+	console.log(parsedChannelConfig);
+	console.log(parsedConfig.SCANNING_CHANNELS);
 	return parsedConfig as Config;
 };
 

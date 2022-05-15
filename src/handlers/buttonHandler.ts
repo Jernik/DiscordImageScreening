@@ -48,13 +48,16 @@ async function handleApproveButton(
 		// get channel
 		let channel = interaction.guild.channels.resolve(requestedChannelId);
 		if (channel.isText()) {
-			channel.send(repostMessage);
-}
+			let postedMessage = await channel.send(repostMessage);
+			postedMessage.react("✅");
+		} else{
+			return;
+		}
 		// repost image w/attachment and attribution
 
 		// update ApprovalChannel listing with approval status and remove buttons
 		message.edit({
-			content: `Approved by <@${moderator.id}>`,
+			content: `Posted by <@${requestingUserId}> in <#${requestedChannelId}> Approved by <@${moderator.id}>`,
 			components:[]
 		});
 		interaction.editReply({
@@ -94,7 +97,7 @@ async function handleRejectButton(interaction: MessageComponentInteraction) {
 			message = messageChannel.messages.resolve(interaction.message.id);
 		}
 		message.edit({
-			content: `Rejected by <@${moderator.id}>`,
+			content: `Posted by <@${requestingUserId}> in channel <#${requestedChannelId}> Rejected by <@${moderator.id}>`,
 			components: [],
 		});
 		

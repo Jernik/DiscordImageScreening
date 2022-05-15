@@ -11,7 +11,7 @@ let MessageHandler =
 		if (message.author.bot) {
 			return;
 		} 
-		if(!config.SCANNING_CHANNELS.includes(message.channel.id)){
+		if(!config.SCANNING_CHANNELS.map(c=>c.submission_channel_id).includes(message.channel.id)){
 			return;
 		}
 
@@ -21,18 +21,18 @@ let MessageHandler =
 		if(attachments.size === 0){
 			return;
 		}
-
+		let destinationChannel = config.SCANNING_CHANNELS.find(c=>c.submission_channel_id === message.channel.id).approved_images_channel_id;
 		let actionRow = new MessageActionRow();
 		actionRow.addComponents([
 			new MessageButton({
-				customId : `approve_${authorId}_${message.channel.id}`,
+				customId: `approve_${authorId}_${destinationChannel}`,
 				emoji: "✅",
 				label: "Approve",
 				style: "PRIMARY",
 			}),
 			new MessageButton({
-				customId : `reject_${authorId}_${message.channel.id}`,
-				emoji: "❌",
+				customId: `reject_${authorId}_${destinationChannel}`,
+				emoji: "✖️",
 				label: "Reject",
 				style: "DANGER",
 			}),
