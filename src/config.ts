@@ -4,6 +4,7 @@ interface ENV {
 	LOG_CHANNEL_ID: string | undefined;
 	APPROVAL_CHANNEL_ID: string | undefined;
 	SCANNING_CHANNELS: string | undefined;
+	MODERATOR_ROLE_IDS: string | undefined;
 }
 
 interface Config {
@@ -15,6 +16,7 @@ interface Config {
 		submission_channel_id: string;
 		approved_images_channel_id:string
 	}[];
+	MODERATOR_ROLE_IDS: string[];
 }
 
 const getConfig = (): ENV => {
@@ -24,6 +26,7 @@ const getConfig = (): ENV => {
 		LOG_CHANNEL_ID: process.env.LOG_CHANNEL_ID,
 		APPROVAL_CHANNEL_ID: process.env.APPROVAL_CHANNEL_ID,
 		SCANNING_CHANNELS: process.env.SCANNING_CHANNELS,
+		MODERATOR_ROLE_IDS: process.env.MODERATOR_ROLE_IDS,
 	};
 };
 
@@ -34,10 +37,8 @@ const getSanitizedConfig = (config: ENV): Config => {
 		}
 	}
 	let parsedConfig = JSON.parse(JSON.stringify(config));
-	let parsedChannelConfig = JSON.parse(config.SCANNING_CHANNELS);
-	parsedConfig.SCANNING_CHANNELS = parsedChannelConfig;
-	console.log(parsedChannelConfig);
-	console.log(parsedConfig.SCANNING_CHANNELS);
+	parsedConfig.SCANNING_CHANNELS = JSON.parse(config.SCANNING_CHANNELS);
+	parsedConfig.MODERATOR_ROLE_IDS = JSON.parse(config.MODERATOR_ROLE_IDS);
 	return parsedConfig as Config;
 };
 

@@ -19,6 +19,8 @@ let MessageHandler =
 		let attachments = message.attachments;
 		//embeds, files, what else?
 		if(attachments.size === 0){
+			message.delete();
+			safelySendDm(message.author, "Please upload an image to your submission");
 			return;
 		}
 		let destinationChannel = config.SCANNING_CHANNELS.find(c=>c.submission_channel_id === message.channel.id).approved_images_channel_id;

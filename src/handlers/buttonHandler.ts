@@ -32,6 +32,14 @@ async function handleApproveButton(
 		if (found) moderator = found;
 	}
 	if (moderator) {
+		let roles = Array.from(moderator.roles.cache.entries());
+		// is the user clicking the button allowed to approve images?
+		if (roles.map((r) => r[0]).filter((value) => config.MODERATOR_ROLE_IDS.includes(value)).length === 0) {
+			interaction.editReply({
+				content: `You are not authorized to approve or reject images. (Error 1003)`,
+			});
+			return;
+		}
 		let requestingUserId = interaction.customId.split("_")[1];
 		let requestedChannelId = interaction.customId.split("_")[2];
 		let messageChannel = interaction.guild.channels.resolve(interaction.channelId);
@@ -83,6 +91,24 @@ async function handleRejectButton(interaction: MessageComponentInteraction) {
 		if (found) moderator = found;
 	}
 	if (moderator) {
+		let roles = Array.from(moderator.roles.cache.entries());
+		console.log(
+			roles
+				.map((r) => r[0])
+				.filter((value) => config.MODERATOR_ROLE_IDS.includes(value))
+		);
+		// is the user clicking the button allowed to approve images?
+		if (
+			roles
+				.map((r) => r[0])
+				.filter((value) => config.MODERATOR_ROLE_IDS.includes(value)).length ===
+			0
+		) {
+			interaction.editReply({
+				content: `You are not authorized to approve or reject images. (Error 1003)`,
+			});
+			return;
+		}
 		let requestingUserId = interaction.customId.split("_")[1];
 		let requestedChannelId = interaction.customId.split("_")[2];
 		// DM user that their image was rejected
