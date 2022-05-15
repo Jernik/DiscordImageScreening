@@ -1,5 +1,6 @@
 import { MessageActionRow, MessageButton, Client, Message } from "discord.js";
 import { config } from "../config";
+import { safelySendDm } from "../functions/messaging";
 
 const prefix = "#";
 
@@ -20,7 +21,7 @@ let MessageHandler =
 		if(attachments.size === 0){
 			return;
 		}
-		
+
 		let actionRow = new MessageActionRow();
 		actionRow.addComponents([
 			new MessageButton({
@@ -41,7 +42,7 @@ let MessageHandler =
 				actionRow
 			],
 			files: [...attachments.map((a) => a.attachment)],
-			content:`Posted by <@${authorId}>`,
+			content:`Posted by <@${authorId}> in <#${message.channel.id}>`,
 		};
 		
 		//get approvalChannel, send message to it
@@ -51,7 +52,10 @@ let MessageHandler =
 		}
 		message.delete();
 		
-		
+		safelySendDm(
+			message.author,
+			`Your image has been received and is pending approval by the Splitgate Discord Staff team.`
+		);
 	};
 
 export { MessageHandler };

@@ -6,6 +6,7 @@ import {
 	MessageComponentInteraction,
 } from "discord.js";
 import { config } from "../config";
+import { safelySendDm } from "../functions/messaging";
 
 let buttonHandler = async (
 	interaction: MessageComponentInteraction
@@ -110,12 +111,6 @@ async function handleRejectButton(interaction: MessageComponentInteraction) {
 	}
 }
 
-async function safelySendDm(member: GuildMember, message: string) {
-		try {
-			member.send(message).catch((e) => console.log("unable to send dm"));
-		} catch (e) {
-			console.log("unable to send dm");
-		}
-	}
+
 
 export { buttonHandler };
