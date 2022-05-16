@@ -57,7 +57,7 @@ async function handleApproveButton(
 		let channel = interaction.guild.channels.resolve(requestedChannelId);
 		if (channel.isText()) {
 			let postedMessage = await channel.send(repostMessage);
-			postedMessage.react("✅");
+			postedMessage.react("974987112808071178");
 		} else{
 			return;
 		}
