@@ -5,6 +5,7 @@ interface ENV {
 	APPROVAL_CHANNEL_ID: string | undefined;
 	SCANNING_CHANNELS: string | undefined;
 	MODERATOR_ROLE_IDS: string | undefined;
+	REACTION_EMOTE: string | undefined;
 }
 
 interface Config {
@@ -17,6 +18,7 @@ interface Config {
 		approved_images_channel_id:string
 	}[];
 	MODERATOR_ROLE_IDS: string[];
+	REACTION_EMOTE: string;
 }
 
 const getConfig = (): ENV => {
@@ -27,6 +29,7 @@ const getConfig = (): ENV => {
 		APPROVAL_CHANNEL_ID: process.env.APPROVAL_CHANNEL_ID,
 		SCANNING_CHANNELS: process.env.SCANNING_CHANNELS,
 		MODERATOR_ROLE_IDS: process.env.MODERATOR_ROLE_IDS,
+		REACTION_EMOTE: process.env.REACTION_EMOTE,
 	};
 };
 

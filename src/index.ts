@@ -38,16 +38,7 @@ client.on(
 	async (interaction: MessageComponentInteraction) => {
 		if (interaction.isButton()) {
 			//dispatch to button handler
-			interaction.deferReply({ ephemeral: true }).then(async () => {
-				try {
-					await buttonHandler(interaction);
-				} catch (e) {
-					console.log(e);
-					return interaction.editReply({
-						content: "There was an error while executing this command!",
-					});
-				}
-			});
+			await buttonHandler(interaction);
 		}
 	}
 );

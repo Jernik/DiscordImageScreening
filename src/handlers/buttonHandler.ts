@@ -15,9 +15,13 @@ let buttonHandler = async (
 	//determine button type
 	let buttonType = interaction.customId.split("_")[0];
 	if (buttonType === "approve") {
-		await handleApproveButton(interaction);
+		interaction.deferReply({ ephemeral: true }).then(async () => {
+			await handleApproveButton(interaction);
+		});
 	} else if (buttonType === "reject") {
-		await handleRejectButton(interaction);
+		interaction.deferReply({ ephemeral: true }).then(async () => {
+			await handleRejectButton(interaction);
+		});
 	}
 };
 
@@ -57,7 +61,7 @@ async function handleApproveButton(
 		let channel = interaction.guild.channels.resolve(requestedChannelId);
 		if (channel.isText()) {
 			let postedMessage = await channel.send(repostMessage);
-			postedMessage.react("974987112808071178");
+			postedMessage.react(config.REACTION_EMOTE);
 		} else{
 			return;
 		}
