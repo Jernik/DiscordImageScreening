@@ -61,7 +61,9 @@ async function handleApproveButton(
 		let channel = interaction.guild.channels.resolve(requestedChannelId);
 		if (channel.isText()) {
 			let postedMessage = await channel.send(repostMessage);
-			postedMessage.react(config.REACTION_EMOTE);
+			if(config.REACTION_EMOTE){
+				postedMessage.react(config.REACTION_EMOTE);
+			}
 		} else{
 			return;
 		}
